@@ -15,5 +15,10 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode(None, "Hello, world!")
         self.assertEqual(node.to_html(), "Hello, world!")
 
+    def test_error_to_html(self):
+        node = LeafNode("h1", None)
+        with self.assertRaises(ValueError):
+            node.to_html()
+    
 if __name__ == "__main__":
     unittest.main()
