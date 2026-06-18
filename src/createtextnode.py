@@ -1,5 +1,5 @@
 from textnode import TextNode, TextType
-
+import re
 
 '''
 node = TextNode("This is text with a `code block` word", TextType.TEXT)
@@ -14,7 +14,11 @@ new_nodes =
 ]
 '''
 
-def split_nodes_delimiter(old_nodes, delimiter, text_type):
+def split_nodes_delimiter(
+    old_nodes: list[TextNode], 
+    delimiter: str, 
+    text_type: TextType) -> list[TextNode]:
+
     new_nodes = []
     boolean = False
     match text_type:
@@ -38,7 +42,6 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             continue
         split_nodes = []
         sections = old_node.text.split(delimiter)
-        print(sections)
         if len(sections) % 2 == 0:
             raise ValueError("invalid markdown, formatted section not closed")
         for i in range(len(sections)):
@@ -51,5 +54,10 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         new_nodes.extend(split_nodes)
 
     return new_nodes
-        
-        
+
+def extract_markdown_images(text):
+    return re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+def extract_markdown_links(text):
+    return re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+    
