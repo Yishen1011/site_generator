@@ -10,6 +10,3 @@ pyproject.toml
 
 # Virtual environments
 .venv
-
-# Public folders
-public/
